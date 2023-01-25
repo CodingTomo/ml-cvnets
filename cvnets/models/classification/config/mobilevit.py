@@ -28,7 +28,65 @@ def get_configuration(opts) -> Dict:
                 "are mutually exclusive."
             )
     mode = mode.lower()
-    if mode == "xx_small":
+    if mode == "nano":
+        mv2_exp_mult = 2
+        config = {
+            "layer1": {
+                "out_channels": 8,
+                "expand_ratio": mv2_exp_mult,
+                "num_blocks": 1,
+                "stride": 1,
+                "block_type": "mv2",
+            },
+            "layer2": {
+                "out_channels": 12,
+                "expand_ratio": mv2_exp_mult,
+                "num_blocks": 3,
+                "stride": 2,
+                "block_type": "mv2",
+            },
+            "layer3": {  # 28x28
+                "out_channels": 24,
+                "transformer_channels": 32,
+                "ffn_dim": 64,
+                "transformer_blocks": 2,
+                "patch_h": 2,  # 8,
+                "patch_w": 2,  # 8,
+                "stride": 2,
+                "mv_expand_ratio": mv2_exp_mult,
+                "head_dim": head_dim,
+                "num_heads": num_heads,
+                "block_type": "mobilevit",
+            },
+            "layer4": {  # 14x14
+                "out_channels": 32,
+                "transformer_channels": 40,
+                "ffn_dim": 80,
+                "transformer_blocks": 4,
+                "patch_h": 2,  # 4,
+                "patch_w": 2,  # 4,
+                "stride": 2,
+                "mv_expand_ratio": mv2_exp_mult,
+                "head_dim": head_dim,
+                "num_heads": num_heads,
+                "block_type": "mobilevit",
+            },
+            "layer5": {  # 7x7
+                "out_channels": 40,
+                "transformer_channels": 48,
+                "ffn_dim": 96,
+                "transformer_blocks": 3,
+                "patch_h": 2,
+                "patch_w": 2,
+                "stride": 2,
+                "mv_expand_ratio": mv2_exp_mult,
+                "head_dim": head_dim,
+                "num_heads": num_heads,
+                "block_type": "mobilevit",
+            },
+            "last_layer_exp_factor": 4,
+        }
+    elif mode == "xx_small":
         mv2_exp_mult = 2
         config = {
             "layer1": {

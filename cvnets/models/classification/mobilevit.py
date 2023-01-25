@@ -31,6 +31,10 @@ class MobileViT(BaseEncoder):
         pool_type = getattr(opts, "model.layer.global_pool", "mean")
         image_channels = 3
         out_channels = 16
+        
+        mode = getattr(opts, "model.classification.mit.mode", "small")
+        if mode == "nano":
+            out_channels = 8
 
         mobilevit_config = get_configuration(opts=opts)
 
