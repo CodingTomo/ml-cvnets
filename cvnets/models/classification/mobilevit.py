@@ -35,6 +35,8 @@ class MobileViT(BaseEncoder):
         mode = getattr(opts, "model.classification.mit.mode", "small")
         if mode == "nano":
             out_channels = 8
+        if mode == "micro":
+            out_channels = 4
 
         mobilevit_config = get_configuration(opts=opts)
 
